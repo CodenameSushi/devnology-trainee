@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { ERROR } from "sqlite3";
 import { ArticleBusiness } from "../business/ArticleBusiness";
-import { CreateArticleInput, GetArticlesInput } from "../dtos/articleDTO";
+import { CreateArticleInput, EditArticleInput, GetArticlesInput } from "../dtos/articleDTO";
 import { BaseError } from "../errors/BaseError";
 
 
@@ -45,6 +45,31 @@ export class ArticleController {
             const output = await this.articleBusiness.createArticle(input)
             
             res.status(201).send(output)
+        } catch (error) {
+            console.log(error)
+
+            if (error instanceof BaseError) {
+                res.status(error.statusCode).send(error.message)
+            } else {
+                res.status(500).send("Erro inesperado")
+            }
+        }
+    }
+
+    public editArticle = async (req:Request, res:Response) => {
+        try {
+            
+            const input: EditArticleInput = {
+                id: req.params.id,
+                title: req.body.title,
+                url: req.body.url,
+                author: req.body.author
+            }
+
+            const output = await this.articleBusiness.editArticle(input)
+
+            res.status(201).send(output)
+            
         } catch (error) {
             console.log(error)
 

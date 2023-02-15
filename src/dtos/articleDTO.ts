@@ -17,3 +17,10 @@ export interface CreateArticleOutput {
     message: string,
     article: ArticleModel
 }
+
+export interface EditArticleInput {
+    id: string | undefined,
+    title: string | undefined,
+    url: string | undefined,
+    author: string | undefined
+}
