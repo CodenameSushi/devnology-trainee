@@ -46,6 +46,13 @@ export class ArticlesDatabase extends BaseDataBase {
             .insert(newArticleDB)
     }
 
+    public async editArticle(newArticleDB: ArticleDB) {
+        await BaseDataBase
+            .connection(ArticlesDatabase.TABLE_ARTICLES)
+            .update(newArticleDB)
+            .where({id : newArticleDB.id})
+    }
+
     public async deleteArticle(id:string){
         await BaseDataBase
             .connection(ArticlesDatabase.TABLE_ARTICLES)

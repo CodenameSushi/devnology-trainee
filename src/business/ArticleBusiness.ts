@@ -1,5 +1,5 @@
 import { ArticlesDatabase } from "../database/ArticlesDatabase";
-import { CreateArticleInput, CreateArticleOutput,  GetArticlesOutput } from "../dtos/articleDTO";
+import { CreateArticleInput, CreateArticleOutput,  EditArticleInput,  GetArticlesOutput } from "../dtos/articleDTO";
 import { BadRequestError } from "../errors/BadRequestError";
 import { Article } from "../models/Article";
 import { IdGenerator } from "../services/IdGenerator";
@@ -81,6 +81,53 @@ export class ArticleBusiness {
         }
 
         return output
+    }
+
+    public editArticle = async (input: EditArticleInput): Promise<CreateArticleOutput> => {
+        const { id, title, url, author } = input
+
+        if(title !== undefined){
+            if(typeof title !== 'string' && title !== undefined){
+                throw new BadRequestError("'title' deve ser 'string' ou 'undefined'");
+            }
+        }
+        if(url !== undefined){
+            if(typeof url !== 'string' && url !== undefined){
+                throw new BadRequestError("'url' deve ser 'string' ou 'undefined'");
+            }
+        }
+        if(author !== undefined){
+            if(typeof author !== 'string' && author !== undefined){
+                throw new BadRequestError("'author' deve ser 'string' ou 'undefined'");
+            }
+        }
+
+
+        const articleDBExists  = await this.articleDatabase.findArticleById(id)
+
+        if(!articleDBExists){
+            throw new BadRequestError("Artigo nao encontrado!")
+        }
+
+        const newArticle = new Article(
+            articleDBExists.id,
+            title || articleDBExists.title,
+            url || articleDBExists.url,
+            author || articleDBExists.author,
+            articleDBExists.created_at
+        )
+
+        const newArticleDB = newArticle.toDBModel()
+        await this.articleDatabase.editArticle(newArticleDB)
+
+        const output: CreateArticleOutput = {
+            message: "Artigo editado com sucesso",
+            article: newArticle.toBusinessModel()
+        }
+
+        return output 
+           
+
     }
 
     public deleteArticle = async (id:string) => {

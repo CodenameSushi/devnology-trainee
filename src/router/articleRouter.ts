@@ -15,4 +15,5 @@ const articleController = new ArticleController(
 
 articleRouter.get("/", articleController.getArticles )
 articleRouter.post("/", articleController.createArticle )
+articleRouter.put("/:id", articleController.editArticle)
 articleRouter.delete("/:id", articleController.deleteArticle)
