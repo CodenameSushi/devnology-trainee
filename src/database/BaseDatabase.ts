@@ -1,10 +1,15 @@
 import { knex } from "knex";
+import dotenv from 'dotenv';
+
+dotenv.config()
+
+const port = process.env.PORT || 3003
 
 export abstract class BaseDataBase {
   protected static connection = knex({
     client: "sqlite3",
     connection: {
-      filename: process.env.DB_FILE_PATH as string, //localização do seu arquivo .db
+      filename: port as string, //localização do seu arquivo .db
     },
     useNullAsDefault: true, // definirá NULL quando encontrar valores undefined
     pool: {
