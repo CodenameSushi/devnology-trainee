@@ -6,7 +6,10 @@
 ### Links do Projeto
 
 - **Link do Deploy:** https://devnology-trainee-app.vercel.app/
+
 - **Repo do APP:** https://github.com/CodenameSushi/devnology-trainee-app
+
+- **Repo do Web Crawler:** https://github.com/CodenameSushi/devnology-webcrawler
 
 - Leia a documentação da API para entender seu funcionamento.
 
