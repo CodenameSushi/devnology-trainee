@@ -40,7 +40,7 @@ ts-node-dev src/index.ts
 
 ## ☕ Algumas notas de desenvolvimento.
 
-- Essa API foi desenvolvida utilizando Node.js, Typescript, Express, Knex e SQLITE3.
+- Essa API foi desenvolvida utilizando Node.js, Typescript, Express, Cors, Knex e SQLITE3.
 
 - Foram utilizados fundamentos de POO e Arquitetura de Software.
 
